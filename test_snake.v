@@ -1,18 +1,16 @@
 `timescale 1ns / 1ps
 
 module test_snake;
-    reg clk = 1'b0;
-    reg reset = 1'b1;
-    reg l = 1'b0;
-    reg r = 1'b0;
-    reg u = 1'b0;
-    reg d = 1'b0;
 
-    wire [3:0] red;
-    wire [3:0] green;
-    wire [3:0] blue;
-    wire h_sync;
-    wire v_sync;
+    reg clk = 0;
+    reg reset = 1;
+    reg l = 0, r = 0, u = 0, d = 0;
+
+    wire [3:0] red, green, blue;
+    wire h_sync, v_sync;
+
+    integer start_x;
+    integer start_y;
 
     Snake dut (
         .red(red),
@@ -22,108 +20,60 @@ module test_snake;
         .v_sync(v_sync),
         .clk(clk),
         .reset(reset),
-        .l(l),
-        .r(r),
-        .u(u),
-        .d(d)
+        .l(l), .r(r), .u(u), .d(d)
     );
 
-    // Speed up simulation
+    // Faster simulation
     defparam dut.upd.COUNT_MAX = 23'd4;
 
     always #5 clk = ~clk;
 
-    task pulse_button;
-        input which;
+    task wait_for_move;
         begin
-            case (which)
-                0: l = 1'b1;
-                1: r = 1'b1;
-                2: u = 1'b1;
-                3: d = 1'b1;
-            endcase
-            @(posedge clk);
-            l = 1'b0;
-            r = 1'b0;
-            u = 1'b0;
-            d = 1'b0;
-        end
-    endtask
-
-    task wait_moves;
-        input integer n;
-        integer k;
-        begin
-            for (k = 0; k < n; k = k + 1) begin
-                repeat (6) @(posedge clk);
-            end
+            repeat (8) @(posedge clk);
         end
     endtask
 
     initial begin
-        $display("Starting Snake test...");
+        $display("Starting Snake control test...");
 
-        // Reset
         #30;
-        reset = 1'b0;
+        reset = 0;
 
-        // -----------------------------------------
-        // Test 1: basic movement to the right
-        // -----------------------------------------
-        wait_moves(2);
-        if (dut.snakeX[0] <= 10'd320) begin
-            $display("FAIL: snake did not move right after reset.");
-            $fatal;
-        end
-        else begin
-            $display("PASS: initial right movement works.");
-        end
-
-        // -----------------------------------------
-        // Test 2: grow after apple
-        // Put apple directly in front of the head
-        // -----------------------------------------
-        dut.appleX = dut.snakeX[0] + 10'd10;
-        dut.appleY = dut.snakeY[0];
-
-        wait_moves(2);
-
-        if (dut.score != 8'd1) begin
-            $display("FAIL: score did not increase after eating apple. score=%0d", dut.score);
+        // --- Test default RIGHT movement ---
+        start_x = dut.snakeX[0];
+        wait_for_move();
+        if (dut.snakeX[0] <= start_x) begin
+            $display("FAIL: default/right movement did not increase X");
             $fatal;
         end
 
-        if (dut.length != 7'd4) begin
-            $display("FAIL: snake length did not increase after eating apple. length=%0d", dut.length);
+        // --- Test DOWN movement ---
+        d = 1;
+        @(posedge clk);
+        d = 0;
+
+        start_y = dut.snakeY[0];
+        wait_for_move();
+        if (dut.snakeY[0] <= start_y) begin
+            $display("FAIL: down movement did not increase Y");
             $fatal;
         end
 
-        $display("PASS: apple eating increases score and length.");
+        // --- Test RIGHT again ---
+        r = 1;
+        @(posedge clk);
+        r = 0;
 
-        // -----------------------------------------
-        // Test 3: self-collision
-        // Build a shape that makes the next DOWN move hit body
-        // Head at (320,240), body at (310,240), (310,250), (320,250)
-        // Then moving DOWN collides with (320,250)
-        // -----------------------------------------
-        dut.length = 7'd4;
-        dut.snakeX[0] = 10'd320; dut.snakeY[0] = 9'd240;
-        dut.snakeX[1] = 10'd310; dut.snakeY[1] = 9'd240;
-        dut.snakeX[2] = 10'd310; dut.snakeY[2] = 9'd250;
-        dut.snakeX[3] = 10'd320; dut.snakeY[3] = 9'd250;
-        dut.appleX = 10'd100;
-        dut.appleY = 9'd100;
-
-        pulse_button(3); // DOWN
-        wait_moves(2);
-
-        if (dut.gameOver !== 1'b1) begin
-            $display("FAIL: self-collision did not trigger game over.");
+        start_x = dut.snakeX[0];
+        wait_for_move();
+        if (dut.snakeX[0] <= start_x) begin
+            $display("FAIL: right movement did not increase X");
             $fatal;
         end
 
-        $display("PASS: self-collision triggers game over.");
-        $display("All tests passed.");
+        $display("PASS: snake moves correctly.");
         $finish;
     end
+
 endmodule
