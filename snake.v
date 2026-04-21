@@ -138,15 +138,15 @@ module Snake(
             gameOver <= 0;
 
             for(i = 0; i < MAX_LENGTH; i = i + 1) begin
-                snakeX[i] <= 320 - (i * CELL_SIZE); // FIXED
+                snakeX[i] <= 320 - (i * CELL_SIZE); 
                 snakeY[i] <= 240;
             end
 
             appleX <= ((randX % ((SCREEN_W - 2*BORDER_W)/CELL_SIZE)) * CELL_SIZE) + BORDER_W;
-appleY <= ((randY % ((SCREEN_H - 2*BORDER_W)/CELL_SIZE)) * CELL_SIZE) + BORDER_W;
+            appleY <= ((randY % ((SCREEN_H - 2*BORDER_W)/CELL_SIZE)) * CELL_SIZE) + BORDER_W;
 
-        end else if (move_tick && !gameOver) begin
-
+            end 
+        else if (move_tick && !gameOver) begin
             if (hitBorder || hitSelf) begin
                 gameOver <= 1;
             end else begin
@@ -174,9 +174,8 @@ appleY <= ((randY % ((SCREEN_H - 2*BORDER_W)/CELL_SIZE)) * CELL_SIZE) + BORDER_W
                 // EAT APPLE
                 if (eatApple) begin
                     grow <= grow + 3;
-
                     appleX <= ((randX % ((SCREEN_W - 2*BORDER_W)/CELL_SIZE)) * CELL_SIZE) + BORDER_W;
-appleY <= ((randY % ((SCREEN_H - 2*BORDER_W)/CELL_SIZE)) * CELL_SIZE) + BORDER_W;
+                    appleY <= ((randY % ((SCREEN_H - 2*BORDER_W)/CELL_SIZE)) * CELL_SIZE) + BORDER_W;
                 end
             end
         end
