@@ -106,7 +106,11 @@ This prevents wrong or multiple inputs.
 
 ## 🧪 Simulation
 
-![Simulation]<img width="1636" height="888" alt="Screenshot 2026-04-20 210827" src="https://github.com/user-attachments/assets/53b4708f-cf7d-43de-a6ff-d781c99f03a4" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/53b4708f-cf7d-43de-a6ff-d781c99f03a4" width="650"/>
+  <br>
+  <em>Figure: Simulation waveform showing clock, input signals, and snake movement behavior</em>
+</p>
 
 
 Simulation verifies:
@@ -119,11 +123,17 @@ Clock is sped up during simulation to test quickly.
 ---
 
 ## 📊 Results
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0d45d8c0-5a25-4efa-a741-61a4c8fa719a" width="800"/>
+  <br>
+  <em>Figure: Post-synthesis resource utilization showing LUT and Flip-Flop usage</em>
+</p>
 
-![Resource Utilization]<img width="1537" height="90" alt="Screenshot 2026-04-20 192941" src="https://github.com/user-attachments/assets/0d45d8c0-5a25-4efa-a741-61a4c8fa719a" />
-
-
-![Power Analysis]<img width="798" height="316" alt="Screenshot 2026-04-20 193059" src="https://github.com/user-attachments/assets/33f46cea-8b79-4a03-a8a1-d47c5b77f832" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/33f46cea-8b79-4a03-a8a1-d47c5b77f832" width="600"/>
+  <br>
+  <em>Figure: On-chip power analysis indicating low power consumption of the design</em>
+</p>
 
 
 ### Observations:
