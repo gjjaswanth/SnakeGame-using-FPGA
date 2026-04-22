@@ -11,10 +11,11 @@ Unlike software-based games, this runs **completely on hardware**, meaning:
 ---
 
 ## 🎮 Final Output
-
-![Game Output]<img width="2490" height="1522" alt="IMG_20260420_134628" src="https://github.com/user-attachments/assets/7c62b228-d10d-4945-a137-bce65f8c34b5" />
-
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7c62b228-d10d-4945-a137-bce65f8c34b5" width="600"/>
+  <br>
+  <em>Figure: FPGA Snake Game Output on VGA Display</em>
+</p>
 ---
 
 ## 🎯 Objective
