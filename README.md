@@ -201,8 +201,3 @@ Instead of writing software, we designed:
 This highlights the power of FPGA in hardware-based applications.
 
 ---
-
-## 💡 Presentation Tip
-You can explain the project in one line:
-
-"The FPGA continuously draws the screen, updates the snake at a slower rate, and checks inputs in parallel, enabling smooth real-time gameplay."
