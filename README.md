@@ -1,12 +1,15 @@
 # 🐍 FPGA Snake Game (Verilog + VGA)
 
 ## 📌 Overview
-This project implements the classic **Snake Game** using an FPGA. The entire system is designed in **Verilog HDL** and displayed on a **VGA monitor**.
+This project is a **hardware implementation** of the classic Snake Game using an **FPGA board**.  
+The design is written in **Verilog HDL** and the game is shown on a **VGA monitor**.
 
-Unlike software-based games, this runs **completely on hardware**, meaning:
-- No operating system
-- No software execution delays
-- Fully **real-time and parallel execution**
+Unlike normal computer games, this project does not run inside software.  
+Instead, the FPGA handles everything directly in hardware. This makes the game:
+- fast
+- real-time
+- smooth
+- highly parallel
 
 ---
 
@@ -16,95 +19,58 @@ Unlike software-based games, this runs **completely on hardware**, meaning:
   <br>
   <em>Figure: FPGA Snake Game Output on VGA Display</em>
 </p>
----
-
-## 🎯 Objective
-The main goals of this project are:
-- Learn FPGA-based system design
-- Understand VGA signal generation
-- Build a real-time interactive system
-- Apply digital logic concepts in a practical way
 
 ---
 
-## 🧠 Basic Idea (Simple Explanation)
-
-The FPGA does three things at the same time:
-1. Continuously draws pixels on the screen  
-2. Updates the snake’s position  
-3. Checks user input and collisions  
-
-This parallel execution makes the game smooth and fast.
+## 🎯 Project Objective
+The main purpose of this project is to:
+- learn FPGA-based digital design
+- understand VGA display timing
+- implement a game using pure hardware logic
+- practice modular Verilog coding
+- study real-time input, output, and control systems
 
 ---
 
-## ⚙️ How the System Works
+## 💡 Simple Idea of the Project
+The FPGA performs three main tasks at the same time:
+
+1. **Draws the screen** using VGA signals  
+2. **Moves the snake** at a slow and playable speed  
+3. **Checks inputs and collisions**  
+
+Because these tasks happen in parallel, the game runs smoothly without delay.
+
+---
+
+## ⚙️ How the Project Works
 
 ### 1. Clock System
-- FPGA clock: **100 MHz**
-- Divided into:
-  - **25 MHz → VGA display**
-  - **Slow clock → Snake movement**
+The FPGA board has a fast clock of **100 MHz**.  
+This clock is too fast for the game directly, so it is divided into smaller clocks:
 
-This ensures the snake moves at a playable speed.
+- **25 MHz clock** → used for VGA display
+- **Slow update clock** → used for snake movement
 
----
-
-### 2. VGA Display
-
-
-
-- Resolution: **640 × 480**
-- Internally uses **800 × 525 timing** (includes sync and blanking)
-
-The VGA module:
-- Tracks pixel position (x, y)
-- Assigns colors:
-  - Snake → Green  
-  - Apple → Red  
-  - Border → Blue  
+This helps the screen update properly and keeps the snake movement human-friendly.
 
 ---
 
-### 3. Snake Movement
-- Moves in fixed grid steps
-- Controlled using buttons (UP, DOWN, LEFT, RIGHT)
+### 2. VGA Display System
+The VGA module is responsible for showing the game on the monitor.
 
-Working:
-- Snake body stored in arrays
-- Each step:
-  - Body shifts forward
-  - Head moves in chosen direction
+- Visible resolution: **640 × 480**
+- Internal timing: **800 × 525**  
+  (includes sync and blanking intervals)
 
----
+The VGA logic continuously checks the current pixel position `(x, y)` and decides what color should be shown.
 
-### 4. Collision Detection
-The system checks:
-- Wall collision → Game Over  
-- Self collision → Game Over  
+In this project:
+- **Snake** is shown in green
+- **Apple** is shown in red
+- **Border** is shown in blue
 
-This is done using coordinate comparison.
-
----
-
-### 5. Apple Generation (LFSR)
-- Uses **Linear Feedback Shift Register**
-- Generates pseudo-random positions
-
-Reason:
-- True randomness is not possible in digital hardware
-
----
-
-### 6. Input Handling
-- Buttons produce noisy signals (bounce)
-- Inputs are synchronized and filtered
-
-This prevents wrong or multiple inputs.
-
----
-
-## 🧪 Simulation
+So the display is created pixel by pixel in real time.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/53b4708f-cf7d-43de-a6ff-d781c99f03a4" width="650"/>
@@ -112,17 +78,61 @@ This prevents wrong or multiple inputs.
   <em>Figure: Simulation waveform showing clock, input signals, and snake movement behavior</em>
 </p>
 
+---
 
-Simulation verifies:
-- Snake movement  
-- Direction control  
-- Reset functionality  
+### 3. Snake Movement
+The snake moves on a grid, not freely pixel by pixel.
 
-Clock is sped up during simulation to test quickly.
+- Direction is controlled using push buttons:
+  - UP
+  - DOWN
+  - LEFT
+  - RIGHT
+
+Each time the update clock gives a pulse:
+- the body segments shift forward
+- the head moves in the selected direction
+
+This gives the snake a smooth and controlled movement.
+
+---
+
+### 4. Collision Detection
+The game continuously checks for two types of collisions:
+
+- **Wall collision** → when the snake hits the border
+- **Self collision** → when the snake hits its own body
+
+If any collision happens, the game stops and shows game over.
+
+---
+
+### 5. Apple Generation
+The apple position is generated using an **LFSR (Linear Feedback Shift Register)**.
+
+LFSR is used because true randomness is difficult to generate in digital hardware.  
+It gives a pseudo-random sequence that works well for game applications.
+
+Each time the snake eats the apple:
+- the snake grows
+- a new apple is placed at another position
+
+---
+
+### 6. Input Handling
+The push buttons on FPGA boards do not give perfectly clean signals.  
+They may bounce for a short time when pressed.
+
+To solve this, the input is:
+- synchronized with the clock
+- filtered before being used
+
+This prevents wrong movement and accidental multiple direction changes.
 
 ---
 
 ## 📊 Results
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/0d45d8c0-5a25-4efa-a741-61a4c8fa719a" width="800"/>
   <br>
@@ -135,53 +145,50 @@ Clock is sped up during simulation to test quickly.
   <em>Figure: On-chip power analysis indicating low power consumption of the design</em>
 </p>
 
-
-### Observations:
-- ~3450 LUTs used  
-- ~1481 Flip-Flops used  
-- Power consumption ~0.12 W  
-- No timing violations  
+### Observed Results
+- Around **3450 LUTs** used
+- Around **1481 Flip-Flops** used
+- Power consumption around **0.12 W**
+- No major timing issues
+- Efficient design for a small FPGA game project
 
 ---
 
 ## 🔌 Hardware Used
-- FPGA Board: **Nexys 4 (Artix-7)**
-- VGA Monitor
-- Push Buttons for input
+- **FPGA Board:** Nexys 4 (Artix-7)
+- **Display:** VGA Monitor
+- **Inputs:** Push buttons for direction and reset
 
 ---
 
-## ▶️ How to Run
-
-1. Open project in **Xilinx Vivado**
-2. Add:
-   - Verilog files (`.v`)
-   - Constraint file (`.xdc`)
-3. Run:
-   - Synthesis  
-   - Implementation  
-   - Generate Bitstream  
-4. Program FPGA
-5. Connect VGA monitor
-
-Game will start on screen 🎮
+## ▶️ How to Run the Project
+1. Open the project in **Xilinx Vivado**
+2. Add all Verilog source files (`.v`)
+3. Add the constraint file (`.xdc`)
+4. Run **Synthesis**
+5. Run **Implementation**
+6. Generate the **Bitstream**
+7. Program the FPGA board
+8. Connect the VGA monitor and play the game
 
 ---
 
 ## ✨ Key Features
-- Fully hardware-based game  
-- Real-time performance  
-- Parallel execution  
-- Modular design  
-- Low power consumption  
+- Fully hardware-based game
+- Real-time VGA display
+- Simple and modular Verilog design
+- Parallel execution of display and logic
+- Low power usage
+- Interactive gameplay using FPGA buttons
 
 ---
 
 ## 👨‍💻 Team Contributions
-- Game logic implementation  
-- VGA signal generation  
-- Clock and timing design  
-- Testing and debugging  
+- Game logic design
+- VGA display generation
+- Clock divider and timing control
+- Input handling and testing
+- Debugging and documentation
 
 ---
 
@@ -191,13 +198,11 @@ https://github.com/gjjaswanth/SnakeGame-using-FPGA
 ---
 
 ## 🏁 Conclusion
-This project demonstrates how FPGA can be used to design a **complete real-time system**.
+This project shows how an FPGA can be used to build a complete real-time game using only hardware logic.
 
-Instead of writing software, we designed:
-- Data flow
-- Signal timing
-- Parallel execution
+Instead of writing software code for a CPU, the design uses:
+- parallel modules
+- timing circuits
+- display logic
+- input control logic
 
-This highlights the power of FPGA in hardware-based applications.
-
----
