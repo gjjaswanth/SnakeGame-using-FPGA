@@ -184,11 +184,20 @@ This prevents wrong movement and accidental multiple direction changes.
 ---
 
 ## 👨‍💻 Team Contributions
-- Game logic design
-- VGA display generation
-- Clock divider and timing control
-- Input handling and testing
-- Debugging and documentation
+The success of this comprehensive design was achieved through parallel development and strict modular assignments:
+• Gunja Jaswanth: Designed the core game logic, including coordinate movement matrices, scoring mechanisms,
+array shifting, and border collision detection.
+• Ravuri Leela Venkata Sai Krishna: Developed the
+VGA display system generator, configured the blanking
+intervals, and handled the continuous on-screen pixel
+rendering logic for the snake body and targets.
+• Pranav Krishna Palanisamy: Managed global timing
+control, designed the specific clock dividers, and integrated all individual modules into the top-level entity for
+proper synthesis.
+• Dasari Yashaswi Praneeth Reddy: Implemented input
+debouncing logic, developed the LFSR randomizer, and
+performed rigorous RTL testing, timing simulation, and
+documentation compilation
 
 ---
 
