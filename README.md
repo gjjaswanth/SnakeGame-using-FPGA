@@ -12,7 +12,8 @@ Unlike software-based games, this runs **completely on hardware**, meaning:
 
 ## 🎮 Final Output
 
-![Game Output](images/game_output.png)
+![Game Output]<img width="2490" height="1522" alt="IMG_20260420_134628" src="https://github.com/user-attachments/assets/7c62b228-d10d-4945-a137-bce65f8c34b5" />
+
 
 ---
 
@@ -50,7 +51,7 @@ This ensures the snake moves at a playable speed.
 
 ### 2. VGA Display
 
-![VGA Output](images/vga.png)
+
 
 - Resolution: **640 × 480**
 - Internally uses **800 × 525 timing** (includes sync and blanking)
@@ -104,7 +105,8 @@ This prevents wrong or multiple inputs.
 
 ## 🧪 Simulation
 
-![Simulation](images/simulation.png)
+![Simulation]<img width="1636" height="888" alt="Screenshot 2026-04-20 210827" src="https://github.com/user-attachments/assets/53b4708f-cf7d-43de-a6ff-d781c99f03a4" />
+
 
 Simulation verifies:
 - Snake movement  
@@ -117,9 +119,11 @@ Clock is sped up during simulation to test quickly.
 
 ## 📊 Results
 
-![Resource Utilization](images/resource.png)
+![Resource Utilization]<img width="1537" height="90" alt="Screenshot 2026-04-20 192941" src="https://github.com/user-attachments/assets/0d45d8c0-5a25-4efa-a741-61a4c8fa719a" />
 
-![Power Analysis](images/power.png)
+
+![Power Analysis]<img width="798" height="316" alt="Screenshot 2026-04-20 193059" src="https://github.com/user-attachments/assets/33f46cea-8b79-4a03-a8a1-d47c5b77f832" />
+
 
 ### Observations:
 - ~3450 LUTs used  
