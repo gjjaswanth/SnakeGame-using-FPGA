@@ -184,20 +184,21 @@ This prevents wrong movement and accidental multiple direction changes.
 ---
 
 ## 👨‍💻 Team Contributions
-The success of this comprehensive design was achieved through parallel development and strict modular assignments:
-• Gunja Jaswanth: Designed the core game logic, including coordinate movement matrices, scoring mechanisms,
-array shifting, and border collision detection.
-• Ravuri Leela Venkata Sai Krishna: Developed the
-VGA display system generator, configured the blanking
-intervals, and handled the continuous on-screen pixel
-rendering logic for the snake body and targets.
-• Pranav Krishna Palanisamy: Managed global timing
-control, designed the specific clock dividers, and integrated all individual modules into the top-level entity for
-proper synthesis.
-• Dasari Yashaswi Praneeth Reddy: Implemented input
-debouncing logic, developed the LFSR randomizer, and
-performed rigorous RTL testing, timing simulation, and
-documentation compilation
+
+This project was developed through a modular approach, where each member worked on specific parts of the system:
+
+- **Gunja Jaswanth**  
+  Designed the core game logic, including snake movement, coordinate handling, array shifting, scoring, and collision detection with borders.
+
+- **Ravuri Leela Venkata Sai Krishna**  
+  Developed the VGA display module, handled screen timing (including blanking intervals), and implemented pixel rendering for the snake and apple.
+
+- **Pranav Krishna Palanisamy**  
+  Managed clock design and timing control, created clock divider modules, and integrated all components into the top-level design for synthesis.
+
+- **Dasari Yashaswi Praneeth Reddy**  
+  Implemented input handling and debouncing, developed the LFSR-based random generator, and performed simulation, testing, and documentation.
+
 
 ---
 
